@@ -103,6 +103,7 @@ export default function Navbar({
     }
 
     const timer = setTimeout(async () => {
+      if (!query.trim()) return; // ✅ PREVENT EMPTY REQUEST
       try {
         const res = await fetch(
           `${API_BASE}/search?movie=${encodeURIComponent(query)}`
