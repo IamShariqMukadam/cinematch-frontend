@@ -105,13 +105,13 @@ export default function Navbar({
     const timer = setTimeout(async () => {
       try {
         const res = await fetch(
-          `${API_BASE}/recommend?movie=${encodeURIComponent(query)}`
+          `${API_BASE}/search?movie=${encodeURIComponent(query)}`
         );
 
         if (!res.ok) return;
 
         const data = await res.json();
-        setResults(data.slice(0, 6));
+        setResults(data.results.slice(0, 6));
         setShowDropdown(true);
         setActiveIndex(-1);
       } catch (err) {
