@@ -2,7 +2,7 @@
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import HeroCaroussel from "@/components/HeroCaroussel";
@@ -17,7 +17,7 @@ export type Recommendation = {
   poster_path?: string;
 };
 
-export default function HomePage() {
+function HomePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -116,7 +116,7 @@ export default function HomePage() {
     const params = new URLSearchParams();
     params.set("q", query);
     params.set("type", type);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   const fetchGenreMovies = async (genre: string) => {
@@ -164,7 +164,7 @@ export default function HomePage() {
           // heroMovies intentionally NOT reset
 
           // ✅ Clear URL params
-          router.push("/");
+          router.push("/", { scroll: false });
         }}
       />
 
@@ -229,5 +229,19 @@ export default function HomePage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen backdrop-blur-xl bg-white/5 flex items-center justify-center">
+        <span className="text-lg font-bold text-slate-700 animate-pulse">
+          Loading...
+        </span>
+      </div>
+    }>
+      <HomePageContent />
+    </Suspense>
   );
 }
