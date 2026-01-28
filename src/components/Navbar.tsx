@@ -161,7 +161,7 @@ export default function Navbar({
     // }, [query]);
 
   return (
-    <nav className="relative flex items-center justify-between px-10 py-6">
+    <nav className=" flex items-center justify-between px-10 py-6">
       {/* Logo */}
       <h1
         onClick={() => {
