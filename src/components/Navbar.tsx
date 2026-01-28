@@ -95,69 +95,70 @@ export default function Navbar({
 // };
 
 
-  useEffect(() => {
-    if (!query.trim()) {
-      setResults([]);
-      setShowDropdown(false);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!query.trim()) {
+  //     setResults([]);
+  //     setShowDropdown(false);
+  //     return;
+  //   }
 
-    const timer = setTimeout(async () => {
-      if (!query.trim()) return; // ✅ PREVENT EMPTY REQUEST
-      try {
-        const res = await fetch(
-          `${API_BASE}/search?movie=${encodeURIComponent(query)}`
-        );
+  //   const timer = setTimeout(async () => {
+  //     if (!query.trim()) return; // ✅ PREVENT EMPTY REQUEST
+  //     try {
+  //       const res = await fetch(
+  //         `${API_BASE}/search?movie=${encodeURIComponent(query)}`
+  //       );
 
-        if (!res.ok) return;
+  //       if (!res.ok) return;
 
-        const data = await res.json();
-        setResults(data.results.slice(0, 6));
-        setShowDropdown(true);
-        setActiveIndex(-1);
-      } catch (err) {
-        console.error(err);
+  //       const data = await res.json();
+  //       setResults(data.results.slice(0, 6));
+  //       setShowDropdown(true);
+  //       setActiveIndex(-1);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }, 300);
+
+      useEffect(() => {
+      if (!query.trim()) {
+        setResults([]);
+        setShowDropdown(false);
+        return;
       }
-    }, 300);
 
-//     const timer = setTimeout(async () => {
-//   const safeQuery = query.trim();
+      const controller = new AbortController();
+      const { signal } = controller;
 
-//   if (safeQuery.length < 1) return;
+      const timer = setTimeout(async () => {
+        try {
+          const res = await fetch(
+            `${API_BASE}/search?query=${encodeURIComponent(query.trim())}`,
+            { signal }
+          );
 
-//   try {
-//     const res = await fetch(
-//       `${API_BASE}/search?query=${encodeURIComponent(safeQuery)}`
-//     );
+          if (!res.ok) return;
 
-//     if (!res.ok) {
-//       setResults([]);
-//       setShowDropdown(false);
-//       return;
-//     }
+          const data = await res.json();
 
-//     const data = await res.json();
+          setResults(data.results.slice(0, 6));
+          setShowDropdown(true);
+          setActiveIndex(-1);
+        } catch (err: any) {
+          if (err.name !== "AbortError") {
+            console.error("Search error:", err);
+          }
+        }
+      }, 250); // ⬅️ slightly faster debounce
 
-//     // 🔥 THIS LINE IS THE KEY
-//     if (!data.results || !Array.isArray(data.results)) {
-//       setResults([]);
-//       setShowDropdown(false);
-//       return;
-//     }
+      return () => {
+        controller.abort(); // 🔥 cancel previous request
+        clearTimeout(timer);
+      };
+    }, [query]);
 
-//     setResults(data.results.slice(0, 6));
-//     setShowDropdown(true);
-//     setActiveIndex(-1);
-//   } catch (err) {
-//     console.error("Search error:", err);
-//     setResults([]);
-//     setShowDropdown(false);
-//   }
-// }, 300);
-
-
-    return () => clearTimeout(timer);
-  }, [query]);
+    //   return () => clearTimeout(timer);
+    // }, [query]);
 
   return (
     <nav className="relative flex items-center justify-between px-10 py-6">
