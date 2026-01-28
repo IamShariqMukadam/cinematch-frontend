@@ -2,7 +2,7 @@
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 
@@ -39,6 +39,7 @@ export default function Navbar({
   const [results, setResults] = useState<SearchResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [showDropdown, setShowDropdown] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
   const triggerRecommend = async () => {
   if (!query.trim()) return;
 
@@ -178,7 +179,7 @@ export default function Navbar({
 
 
       {/* Search */}
-      <div className="relative w-[480px]">
+      <div ref={searchRef} className="relative w-[480px]">
         <div className="flex items-center gap-3 bg-slate-900 backdrop-blur-md px-6 py-3 rounded-full border border-black/10">
           <input
             value={query}
@@ -235,49 +236,58 @@ export default function Navbar({
         {/* )} */}
         {showDropdown &&
           results.length > 0 &&
+          searchRef.current &&
           typeof window !== "undefined" &&
-          createPortal(
-            <ul
-              className="fixed top-[88px] left-1/2 -translate-x-1/2 w-[480px]
-                        bg-slate-900/90 backdrop-blur-xl rounded-xl
-                        border border-white/10 shadow-xl z-[9999]"
-            >
-              {results.map((movie, index) => (
-                <li
-                  key={movie.title}
-                  className="flex items-center gap-4 px-4 py-3 cursor-pointer
-                            hover:bg-white/10"
-                  onClick={() => {
-                    setQuery(movie.title);
-                    setShowDropdown(false);
-                    triggerRecommend();
-                  }}
-                >
-                  <Image
-                    src={
-                      movie.poster_path
-                        ? `${POSTER_BASE_URL}${movie.poster_path}`
-                        : "/placeholder.jpg"
-                    }
-                    alt={movie.title}
-                    width={40}
-                    height={60}
-                    className="rounded-md object-cover"
-                  />
+          (() => {
+            const rect = searchRef.current!.getBoundingClientRect();
 
-                  <div className="flex flex-col">
-                    <span className="text-sm text-white/90">
-                      {toTitleCase(movie.title)}
-                    </span>
-                    <span className="text-xs text-white/60">
-                      {movie.release_year ? Math.floor(movie.release_year) : ""}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>,
-            document.body
-          )}
+            return createPortal(
+              <ul
+                style={{
+                  position: "absolute",
+                  top: rect.bottom + window.scrollY + 8,
+                  left: rect.left + window.scrollX,
+                  width: rect.width,
+                }}
+                className="bg-slate-900/90 backdrop-blur-xl rounded-xl
+                          border border-white/10 shadow-xl z-[9999]"
+              >
+                {results.map((movie) => (
+                  <li
+                    key={movie.title}
+                    className="flex items-center gap-4 px-4 py-3 cursor-pointer hover:bg-white/10"
+                    onClick={() => {
+                      setQuery(movie.title);
+                      setShowDropdown(false);
+                      triggerRecommend();
+                    }}
+                  >
+                    <Image
+                      src={
+                        movie.poster_path
+                          ? `${POSTER_BASE_URL}${movie.poster_path}`
+                          : "/placeholder.jpg"
+                      }
+                      alt={movie.title}
+                      width={40}
+                      height={60}
+                      className="rounded-md object-cover"
+                    />
+
+                    <div className="flex flex-col">
+                      <span className="text-sm text-white/90">
+                        {toTitleCase(movie.title)}
+                      </span>
+                      <span className="text-xs text-white/60">
+                        {movie.release_year ? Math.floor(movie.release_year) : ""}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>,
+              document.body
+            );
+          })()}
       </div>
       <div className="w-10" />
     </nav>
