@@ -138,29 +138,30 @@ export default function Navbar({
             { signal }
           );
 
-          if (!res.ok) return;
+          if (!res.ok) {
+            setResults([]);
+            setShowDropdown(false);
+            return;
+          }
 
           const data = await res.json();
-
+          if (!data.results || !Array.isArray(data.results)) {
+            setResults([]);
+            setShowDropdown(false);
+            return;
+          }
           setResults(data.results.slice(0, 6));
           setShowDropdown(true);
           setActiveIndex(-1);
-        } catch (err: any) {
-          if (err.name !== "AbortError") {
-            console.error("Search error:", err);
-          }
+         } catch (err) {
+          console.error("Search error:", err);
+          setResults([]);
+          setShowDropdown(false);
         }
-      }, 250); // ⬅️ slightly faster debounce
+      }, 300);
 
-      return () => {
-        controller.abort(); // 🔥 cancel previous request
-        clearTimeout(timer);
-      };
-    }, [query]);
-
-    //   return () => clearTimeout(timer);
-    // }, [query]);
-
+  return () => clearTimeout(timer);
+}, [query]);
   return (
     <nav className="relative z-50 flex items-center justify-between px-10 py-6">
       {/* Logo */}
