@@ -102,58 +102,58 @@ export default function Navbar({
       return;
     }
 
-    // const timer = setTimeout(async () => {
-    //   if (!query.trim()) return; // ✅ PREVENT EMPTY REQUEST
-    //   try {
-    //     const res = await fetch(
-    //       `${API_BASE}/search?movie=${encodeURIComponent(query)}`
-    //     );
-
-    //     if (!res.ok) return;
-
-    //     const data = await res.json();
-    //     setResults(data.results.slice(0, 6));
-    //     setShowDropdown(true);
-    //     setActiveIndex(-1);
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // }, 300);
-
     const timer = setTimeout(async () => {
-  const safeQuery = query.trim();
+      if (!query.trim()) return; // ✅ PREVENT EMPTY REQUEST
+      try {
+        const res = await fetch(
+          `${API_BASE}/search?movie=${encodeURIComponent(query)}`
+        );
 
-  if (safeQuery.length < 1) return;
+        if (!res.ok) return;
 
-  try {
-    const res = await fetch(
-      `${API_BASE}/search?query=${encodeURIComponent(safeQuery)}`
-    );
+        const data = await res.json();
+        setResults(data.results.slice(0, 6));
+        setShowDropdown(true);
+        setActiveIndex(-1);
+      } catch (err) {
+        console.error(err);
+      }
+    }, 300);
 
-    if (!res.ok) {
-      setResults([]);
-      setShowDropdown(false);
-      return;
-    }
+//     const timer = setTimeout(async () => {
+//   const safeQuery = query.trim();
 
-    const data = await res.json();
+//   if (safeQuery.length < 1) return;
 
-    // 🔥 THIS LINE IS THE KEY
-    if (!data.results || !Array.isArray(data.results)) {
-      setResults([]);
-      setShowDropdown(false);
-      return;
-    }
+//   try {
+//     const res = await fetch(
+//       `${API_BASE}/search?query=${encodeURIComponent(safeQuery)}`
+//     );
 
-    setResults(data.results.slice(0, 6));
-    setShowDropdown(true);
-    setActiveIndex(-1);
-  } catch (err) {
-    console.error("Search error:", err);
-    setResults([]);
-    setShowDropdown(false);
-  }
-}, 300);
+//     if (!res.ok) {
+//       setResults([]);
+//       setShowDropdown(false);
+//       return;
+//     }
+
+//     const data = await res.json();
+
+//     // 🔥 THIS LINE IS THE KEY
+//     if (!data.results || !Array.isArray(data.results)) {
+//       setResults([]);
+//       setShowDropdown(false);
+//       return;
+//     }
+
+//     setResults(data.results.slice(0, 6));
+//     setShowDropdown(true);
+//     setActiveIndex(-1);
+//   } catch (err) {
+//     console.error("Search error:", err);
+//     setResults([]);
+//     setShowDropdown(false);
+//   }
+// }, 300);
 
 
     return () => clearTimeout(timer);
