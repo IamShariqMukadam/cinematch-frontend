@@ -43,7 +43,7 @@ export default function Navbar({
 
   try {
     setLoading(true);
-    setShowDropdown(false);
+    // setShowDropdown(false);
 
     const res = await fetch(
       `${API_BASE}/recommend?movie=${encodeURIComponent(query)}`
@@ -124,7 +124,7 @@ export default function Navbar({
       useEffect(() => {
       if (!query.trim()) {
         setResults([]);
-        setShowDropdown(false);
+        setShowDropdown(true);
         return;
       }
 
