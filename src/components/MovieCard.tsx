@@ -39,8 +39,25 @@ export default function MovieCard({ movie }: { movie: any }) {
       })
       .join(" ");
 
+  // Create TMDB search URL
+  const tmdbSearchUrl = `https://www.themoviedb.org/search?query=${encodeURIComponent(movie.title)}`;
+
+  const handleClick = () => {
+    window.open(tmdbSearchUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <div className="w-full max-w-[160px] mx-auto">
+    <div
+      className="w-full max-w-[160px] mx-auto cursor-pointer transition-transform hover:scale-105"
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleClick();
+        }
+      }}
+    >
       <img
         src={posterUrl}
         alt={movie.title}

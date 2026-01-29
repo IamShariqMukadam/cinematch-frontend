@@ -34,7 +34,7 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
         return (
           <div
             key={idx}
-            className="rounded-2xl sm:rounded-3xl shadow-xl h-[200px] sm:h-[240px] md:h-[260px] flex flex-col justify-end"
+            className="rounded-2xl sm:rounded-3xl shadow-xl h-[200px] sm:h-[240px] md:h-[260px] flex flex-col justify-end overflow-hidden"
             style={{
               backgroundImage: bgImage ? `url(${bgImage})` : undefined,
               backgroundSize: "cover",
