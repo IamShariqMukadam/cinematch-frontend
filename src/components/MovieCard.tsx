@@ -39,11 +39,13 @@ export default function MovieCard({ movie }: { movie: any }) {
       })
       .join(" ");
 
-  // Create TMDB search URL
-  const tmdbSearchUrl = `https://www.themoviedb.org/search?query=${encodeURIComponent(movie.title)}`;
-
   const handleClick = () => {
-    window.open(tmdbSearchUrl, '_blank', 'noopener,noreferrer');
+    // Use TMDB ID if available to go directly to movie page
+    const url = movie.tmdb_id
+      ? `https://www.themoviedb.org/movie/${movie.tmdb_id}`
+      : `https://www.themoviedb.org/search?query=${encodeURIComponent(movie.title)}`;
+
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (

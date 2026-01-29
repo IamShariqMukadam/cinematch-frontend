@@ -24,6 +24,15 @@ const toMovieTitleCase = (text: string) =>
 export default function HeroCarousel({ movies }: HeroCarouselProps) {
   if (!movies || movies.length === 0) return null;
 
+  const handleMovieClick = (movie: any) => {
+    // Use TMDB ID if available, otherwise fallback to search
+    const url = movie.tmdb_id
+      ? `https://www.themoviedb.org/movie/${movie.tmdb_id}`
+      : `https://www.themoviedb.org/search?query=${encodeURIComponent(movie.title)}`;
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 container-padding mt-4 sm:mt-6">
       {movies.slice(0, 2).map((movie, idx) => {
@@ -34,7 +43,15 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
         return (
           <div
             key={idx}
-            className="rounded-2xl sm:rounded-3xl shadow-xl h-[200px] sm:h-[240px] md:h-[260px] flex flex-col justify-end overflow-hidden"
+            onClick={() => handleMovieClick(movie)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleMovieClick(movie);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            className="rounded-2xl sm:rounded-3xl shadow-xl h-[200px] sm:h-[240px] md:h-[260px] flex flex-col justify-end overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
             style={{
               backgroundImage: bgImage ? `url(${bgImage})` : undefined,
               backgroundSize: "cover",
