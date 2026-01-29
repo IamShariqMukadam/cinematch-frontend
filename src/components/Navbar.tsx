@@ -71,7 +71,6 @@ export default function Navbar({
       )
       .join(" ");
 
-  // Handle clicks outside dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -83,7 +82,6 @@ export default function Navbar({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Search suggestions
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
@@ -136,7 +134,7 @@ export default function Navbar({
   }, [query]);
 
   return (
-    <nav className="relative z-50 flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 md:px-10 py-4 sm:py-6 gap-4 sm:gap-0">
+    <nav className="relative z-50 flex flex-col sm:flex-row items-center justify-between container-padding py-4 sm:py-6 gap-4 sm:gap-0">
       {/* Logo */}
       <h1
         onClick={() => {

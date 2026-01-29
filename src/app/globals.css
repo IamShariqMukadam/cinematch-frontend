@@ -61,6 +61,23 @@ body {
 }
 
 /* ========================================
+   CONSISTENT PADDING UTILITY
+   ======================================== */
+
+/* This ensures all components align perfectly on all screen sizes */
+.container-padding {
+  padding-left: 1rem;   /* 16px on mobile */
+  padding-right: 1rem;  /* 16px on mobile */
+}
+
+@media (min-width: 640px) {
+  .container-padding {
+    padding-left: 2.5rem;  /* 40px on desktop */
+    padding-right: 2.5rem; /* 40px on desktop */
+  }
+}
+
+/* ========================================
    RESPONSIVE UTILITIES
    ======================================== */
 
@@ -82,10 +99,4 @@ body {
   input[type="submit"] {
     min-height: 44px;
   }
-}
-
-/* Safe area padding for devices with notches */
-.safe-padding {
-  padding-left: max(1rem, env(safe-area-inset-left));
-  padding-right: max(1rem, env(safe-area-inset-right));
 }

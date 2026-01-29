@@ -17,13 +17,12 @@ export default function MovieGrid({
   recommendations?: Recommendation[];
   showTitle?: boolean;
 }) {
-  // NO DATA
   if (!recommendations || recommendations.length === 0) {
     return null;
   }
 
   return (
-    <section className="px-4 sm:px-6 md:px-10 mt-12 sm:mt-14 md:mt-16">
+    <section className="container-padding mt-12 sm:mt-14 md:mt-16">
       {showTitle && (
         <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-slate-900">
           Recommended for you

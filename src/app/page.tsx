@@ -34,7 +34,7 @@ function HomePageContent() {
     fetch(`${API_BASE}/top-rated`)
       .then((res) => res.json())
       .then((data) => {
-        setHeroMovies(data); // default hero = Top Rated
+        setHeroMovies(data);
       })
       .catch(console.error);
 
@@ -49,13 +49,11 @@ function HomePageContent() {
   // 🔄 HANDLE URL CHANGES (Back/Forward buttons)
   useEffect(() => {
     const query = searchParams.get("q");
-    const type = searchParams.get("type"); // 'movie' or 'genre'
+    const type = searchParams.get("type");
 
-    // Skip initial load to prevent double fetch
     if (isInitialLoad) {
       setIsInitialLoad(false);
 
-      // But if URL has params on initial load, restore that state
       if (query && type) {
         restoreStateFromURL(query, type);
       }
@@ -63,13 +61,11 @@ function HomePageContent() {
     }
 
     if (!query || !type) {
-      // No query params = home view
       setRecommendations(null);
       setLastSearch(null);
       return;
     }
 
-    // Restore state from URL
     restoreStateFromURL(query, type);
   }, [searchParams]);
 
@@ -78,7 +74,6 @@ function HomePageContent() {
       setLoading(true);
 
       if (type === "movie") {
-        // Fetch movie recommendations
         const res = await fetch(
           `${API_BASE}/recommend?movie=${encodeURIComponent(query)}`
         );
@@ -91,7 +86,6 @@ function HomePageContent() {
           setLastSearch(query);
         }
       } else if (type === "genre") {
-        // Fetch genre movies
         const endpoint =
           query === "Top Rated"
             ? `${API_BASE}/top-rated`
@@ -136,7 +130,6 @@ function HomePageContent() {
       setHeroMovies(data);
       setLastSearch(genre);
 
-      // ✅ Update URL for browser history
       updateURL(genre, "genre");
     } catch (err) {
       console.error(err);
@@ -153,17 +146,12 @@ function HomePageContent() {
           setRecommendations(movies);
           setHeroMovies(movies);
           setLastSearch(query);
-
-          // ✅ Update URL for browser history
           updateURL(query, "movie");
         }}
         setLoading={setLoading}
         onReset={() => {
           setRecommendations(null);
           setLastSearch(null);
-          // heroMovies intentionally NOT reset
-
-          // ✅ Clear URL params
           router.push("/", { scroll: false });
         }}
       />
@@ -182,23 +170,21 @@ function HomePageContent() {
         <>
           {/* HERO */}
           {heroMovies.length >= 2 && (
-            <div className="px-10 mt-6">
-              <HeroCaroussel movies={heroMovies.slice(0, 2)} />
-            </div>
+            <HeroCaroussel movies={heroMovies.slice(0, 2)} />
           )}
 
-          <div className="px-10 animate-fadeIn">
-            <GenreTabs onGenreSelect={fetchGenreMovies} />
+          {/* GENRE TABS */}
+          <GenreTabs onGenreSelect={fetchGenreMovies} />
 
-            <div className="mt-12">
-              <h2 className="text-xl font-bold mb-6 text-slate-900">
-                Latest (2025)
-              </h2>
-
-              <MovieGrid recommendations={latest.slice(0, 10)}
+          {/* LATEST SECTION */}
+          <div className="mt-12">
+            <h2 className="text-xl font-bold mb-6 text-slate-900 container-padding">
+              Latest (2025)
+            </h2>
+            <MovieGrid
+              recommendations={latest.slice(0, 10)}
               showTitle={false}
-              />
-            </div>
+            />
           </div>
         </>
       )}
@@ -206,9 +192,9 @@ function HomePageContent() {
       {/* RECOMMENDATION VIEW */}
       {recommendations && !loading && (
         <div className="animate-fadeIn">
-          {/* ✅ TEXT ABOVE HERO */}
+          {/* TEXT ABOVE HERO */}
           {lastSearch && (
-            <p className="px-10 mt-6 text-sm text-slate-600 mb-4">
+            <p className="container-padding mt-6 text-sm text-slate-600 mb-4">
               Top recommendations based on your interest in{" "}
               <span className="text-slate-900 font-bold">{lastSearch}</span>
             </p>
@@ -216,15 +202,13 @@ function HomePageContent() {
 
           {/* HERO */}
           {heroMovies.length === 0 && !loading && (
-            <div className="h-[320px] bg-slate-200 animate-pulse rounded-2xl mx-10 mt-6" />
+            <div className="h-[320px] bg-slate-200 animate-pulse rounded-2xl container-padding mt-6" />
           )}
           {heroMovies.length >= 2 && (
-            <div className="px-10">
-              <HeroCaroussel movies={heroMovies.slice(0, 2)} />
-            </div>
+            <HeroCaroussel movies={heroMovies.slice(0, 2)} />
           )}
 
-          {/* GRID (2 + 10 = full 5×2) */}
+          {/* GRID */}
           <MovieGrid recommendations={recommendations.slice(2, 12)} />
         </div>
       )}

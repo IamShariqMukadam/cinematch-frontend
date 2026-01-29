@@ -3,7 +3,6 @@ const TMDB_POSTER_BASE = "https://image.tmdb.org/t/p/w342";
 function getPosterSrc(posterPath?: string | null) {
   if (!posterPath) return "/placeholder.jpg";
 
-  // backend already sends full TMDB URL
   if (posterPath.startsWith("http")) {
     return posterPath;
   }
@@ -24,22 +23,18 @@ export default function MovieCard({ movie }: { movie: any }) {
       .map((word, index) => {
         const lower = word.toLowerCase();
 
-        // Preserve Roman numerals
         if (ROMAN_NUMERALS.includes(lower)) {
           return lower.toUpperCase();
         }
 
-        // Always capitalize first word (The, A, An included)
         if (index === 0) {
           return lower.charAt(0).toUpperCase() + lower.slice(1);
         }
 
-        // Keep true connectors lowercase
         if (["of", "and", "in", "on", "to"].includes(lower)) {
           return lower;
         }
 
-        // Capitalize everything else
         return lower.charAt(0).toUpperCase() + lower.slice(1);
       })
       .join(" ");

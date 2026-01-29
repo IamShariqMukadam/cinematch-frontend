@@ -26,16 +26,15 @@ const genres = [
 
 export default function GenreTabs({ onGenreSelect }: GenreTabsProps) {
   return (
-    <div className="px-4 sm:px-6 md:px-10 mt-6">
-      {/* Desktop/Tablet View - Horizontal scroll */}
-      <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+    <div className="container-padding mt-6">
+      <div className="flex justify-between gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
         {genres.map(({ name, icon: Icon }) => (
           <button
             key={name}
             onClick={() => onGenreSelect(name)}
             className="
               flex items-center justify-center gap-1.5 sm:gap-2
-              flex-shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3
+              flex-1 min-w-fit px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3
               rounded-lg sm:rounded-xl
               bg-slate-900 text-white
               hover:bg-slate-700 transition-colors

@@ -9,12 +9,10 @@ const toMovieTitleCase = (text: string) =>
     .map((word, index) => {
       const lower = word.toLowerCase();
 
-      // Always capitalize first word
       if (index === 0) {
         return lower.charAt(0).toUpperCase() + lower.slice(1);
       }
 
-      // Lowercase only true connectors
       if (["of", "and", "in", "on", "to"].includes(lower)) {
         return lower;
       }
@@ -27,7 +25,7 @@ export default function HeroCarousel({ movies }: HeroCarouselProps) {
   if (!movies || movies.length === 0) return null;
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-6 md:px-10 mt-4">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 container-padding mt-4 sm:mt-6">
       {movies.slice(0, 2).map((movie, idx) => {
         const bgImage = movie.poster_path
           ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
