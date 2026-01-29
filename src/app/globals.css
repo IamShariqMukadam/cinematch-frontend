@@ -20,6 +20,10 @@
   }
 }
 
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -35,10 +39,53 @@
   animation: fadeIn 0.5s ease-out;
 }
 
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: #ffffff;
   color: #1f2937; /* slate-800 */
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
 }
 
+/* Ensure mobile text is readable (prevent zoom on input focus) */
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+}
 
+/* ========================================
+   RESPONSIVE UTILITIES
+   ======================================== */
+
+/* Hide scrollbar for horizontal scrolling (genre tabs) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Better touch targets for mobile (44x44px minimum) */
+@media (max-width: 640px) {
+  button,
+  a[role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+  }
+}
+
+/* Safe area padding for devices with notches */
+.safe-padding {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
