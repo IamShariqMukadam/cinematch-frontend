@@ -1,33 +1,186 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🎬 CineMatch Frontend
 
-First, run the development server:
+### Next.js 16 + TypeScript | Responsive Movie Discovery UI
 
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-4CAF50?style=for-the-badge)](https://cinematch-recommender.vercel.app)
+&nbsp;&nbsp;&nbsp;
+[![Backend Repo](https://img.shields.io/badge/⚡_Backend_Repo-2196F3?style=for-the-badge)](https://github.com/IamShariqMukadam/cinematch-backend)
+
+**Frontend for CineMatch - AI-powered movie recommendation system**
+
+[Live Demo](https://cinematch-frontend-olive.vercel.app) • [Backend API](https://github.com/IamShariqMukadam/cinematch-backend) 
+
+</div>
+
+---
+
+## 📸 Preview
+
+<div align="center">
+  <img src="screenshots/desktop-home.png" alt="Desktop" width="800"/>
+</div>
+
+<details>
+<summary><b>📱 Mobile View</b></summary>
+<br/>
+<p align="center">
+  <img src="screenshots/mobile-home.png" width="250"/>
+  <img src="screenshots/mobile-search.png" width="250"/>
+</p>
+</details>
+
+---
+
+## ⚡ Features
+
+- 🔍 **Real-time Search** - Autocomplete dropdown with debounced API calls
+- 🎨 **Fully Responsive** - Mobile-first design with Tailwind CSS
+- 🚀 **Optimized Performance** - Next.js 16 with Image optimization
+- 🎯 **Smart Navigation** - Browser history support (back/forward buttons work)
+- 🎬 **TMDB Integration** - Click movies to view on TMDB
+- ✨ **Smooth Animations** - Glassmorphism effects and transitions
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 16.1.1 (React 19)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** Headless UI, Heroicons
+- **Deployment:** Vercel
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+```bash
+node >= 18.0.0
+npm or yarn
+```
+
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/IamShariqMukadam/cinematch-frontend.git
+cd cinematch-frontend
+```
+
+2. **Install dependencies**
+```bash
+npm install
+# or
+yarn install
+```
+
+3. **Set up environment variables**
+```bash
+# Create .env.local file
+NEXT_PUBLIC_API_BASE_URL=https://shariqmukadam-cinematch-backend.hf.space
+```
+
+4. **Run development server**
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Open** [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+frontend/
+├── app/
+│   ├── page.tsx              # Main homepage with state management
+│   ├── layout.tsx            # Root layout with fonts
+│   └── globals.css           # Global styles + responsive utilities
+├── components/
+│   ├── Navbar.tsx            # Search bar with autocomplete
+│   ├── HeroCarousel.tsx      # Featured movie carousel
+│   ├── GenreTabs.tsx         # Genre filter buttons
+│   ├── MovieCard.tsx         # Individual movie card
+│   └── MovieGrid.tsx         # Movie grid layout
+└── public/
+    └── screenshots/          # Demo images
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Key Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Navbar
+- Real-time search with 300ms debounce
+- Dropdown suggestions with movie posters
+- Keyboard navigation support
+
+### HeroCarousel
+- Displays top 2 recommended movies
+- Responsive grid (1 col mobile, 2 col desktop)
+- Click to view on TMDB
+
+### MovieGrid
+- Responsive grid (2-5 columns based on screen size)
+- Lazy loading images
+- Hover effects with smooth transitions
+
+---
+
+## 🔗 API Integration
+
+Connects to [CineMatch Backend API](https://github.com/IamShariqMukadam/cinematch-backend)
+
+```typescript
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+// Example: Get recommendations
+const res = await fetch(`${API_BASE}/recommend?movie=${query}`);
+const data = await res.json();
+```
+
+---
+
+## 📱 Responsive Design
+
+- **Mobile:** < 640px (stack layout, compact UI)
+- **Tablet:** 640px - 1024px (2-3 column grids)
+- **Desktop:** > 1024px (full 5-column grid)
+
+Uses consistent `container-padding` utility for perfect alignment across all screen sizes.
+
+---
+
+## 🚀 Deployment
+
+Deployed on **Vercel** with automatic builds on push to main branch.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/IamShariqMukadam/cinematch-frontend)
+
+---
+
+## 👨‍💻 Author
+
+**Shariq Mukadam**
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/IamShariqMukadam)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
+
+---
+
+<div align="center">
+
+**Part of [CineMatch Project](https://github.com/IamShariqMukadam/cinematch)**
+
+⭐ Star this repo if you found it helpful!
+
+</div>
 
 ## Deploy on Vercel
 
