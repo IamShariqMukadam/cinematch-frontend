@@ -19,15 +19,16 @@
 ## 📸 Preview
 
 <div align="center">
-  <img src="screenshots/desktop-home.png" alt="Desktop" width="800"/>
+  <img src="assets/cinematch-recommender.vercel.app_.png" alt="Desktop" width="800"/>
+  <img src="assets/cinematch-recommender.vercel.app__q=avengers&type=movie.png" alt="Desktop" width="800"/>
 </div>
 
 <details>
 <summary><b>📱 Mobile View</b></summary>
 <br/>
 <p align="center">
-  <img src="screenshots/mobile-home.png" width="250"/>
-  <img src="screenshots/mobile-search.png" width="250"/>
+  <img src="assets/cinematch-recommender.vercel.app_(iPhone 14 Pro Max).png" width="250"/>
+  <img src="assets/cinematch-recommender.vercel.app__q=avengers&type=movie(iPhone 14 Pro Max).png" width="250"/>
 </p>
 </details>
 
@@ -167,23 +168,21 @@ Deployed on **Vercel** with automatic builds on push to main branch.
 
 ## 👨‍💻 Author
 
-**Shariq Mukadam**
-
+<h3 align = "center">Shariq Mukadam</h3>
+<div align="center">
+  
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/IamShariqMukadam)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
+</div>
+
 
 ---
 
 <div align="center">
 
-**Part of [CineMatch Project](https://github.com/IamShariqMukadam/cinematch)**
 
 ⭐ Star this repo if you found it helpful!
 
 </div>
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
